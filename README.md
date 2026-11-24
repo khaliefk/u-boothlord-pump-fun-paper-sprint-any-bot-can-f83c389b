@@ -13,20 +13,20 @@ agree byte for byte.
 
 ## The strategy
 
-Buy a coin soon after it launches, but only once real buyers show up. A
-fresh curve moves most in its first minutes, so the bot watches each new
-mint's tape for buy flow — at least 4 buy trades from at least 4 distinct
-wallets in the last 45 slots, net SOL flowing in and accelerating (the
-newer half of the window beating the older half), price up and sitting
-near its recent high — and takes a small first stake of 0.05 SOL (capped
-at 1% of the curve's real SOL reserve, never below 0.01 SOL).
+Buy a coin at its launch, but only launches that do not smell like a
+rug. A fresh curve moves most in its first seconds, so the bot watches
+each CreateEvent and takes one small stake of 0.08 SOL (capped at 1% of
+the curve's real SOL reserve, never below 0.01 SOL) when the launch
+passes the filter: the creator has not sold, the creator bought a little
+in the create slot (at least 0.02 SOL, at most 2 SOL — skin in the game,
+not a load-up before a dump), and 3 to 5 distinct outside wallets have
+bought in the first few slots. No re-entries, one stake per coin.
 
-It adds 0.05 SOL once if the price steps up 12% and buy flow is still
-positive, up to 0.1 SOL per coin. It sells the whole position on the first
-of: value at 1.4x cost, value at 0.9x cost, a trailing stop once the
-position ran 20% up, a single whale sell of 2 SOL or more, or 1500 slots
-held flat. Small stakes and fast exits keep at most five slots busy, so
-the bot rotates through many coins across the six-hour window instead of
+It sells the whole position on the first of: value at 1.25x cost, value
+at 0.88x cost, a trailing stop once the position ran 20% up (sell on a
+15% give-back from the peak), the creator selling, or 15 slots held.
+Small stakes and fast exits keep at most five slots busy, so the bot
+rotates through many launches across the six-hour window instead of
 sitting on dead ones. A pacing probe (0.01 SOL round trip on a liquid
 coin) keeps the fill and coin counts up when the tape goes quiet, which
 is what the guardrail needs: at least 20 coins with a round trip of
